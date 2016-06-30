@@ -1,4 +1,4 @@
-FROM tarikihr/node4-lts:4.2.6
+FROM tarikihr/node4-lts:4.4.7
 
 ARG GITHUB_KEY
 
