@@ -5,11 +5,9 @@ FROM debian:jessie
 
 MAINTAINER Tarik Ansari "TarikAnsari@iheartmedia.com"
 
-ENV NODE_VERSION v4.2.6
-ENV NPM_VERSION  2.14.18
+ENV NODE_VERSION v4.4.7
 
 # Install system packages
-# compass install requires ruby, ruby-dev, make and ruby-ffi
 # git provides support for npm git packages
 # openssh-client provides support for ssh-keyscan and git+ssh
 RUN \
@@ -17,7 +15,6 @@ RUN \
     ca-certificates \
     openssh-client \
     git \
-    ruby ruby-dev ruby-ffi make \
     curl \
     --no-install-recommends
 
@@ -26,11 +23,11 @@ RUN \
   curl -SL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz -o /tmp/node.tar.gz && \
   cd /usr/local && tar --strip-components 1 -xzf /tmp/node.tar.gz && \
   rm /tmp/node.tar.gz && \
-  npm install -g npm@$NPM_VERSION && \
   printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
 
 
 # Install Ruby system packages
+# compass install requires ruby, ruby-dev, make and ruby-ffi
 RUN \
   apt-get update && apt-get install -y \
     ruby ruby-dev ruby-ffi make \
