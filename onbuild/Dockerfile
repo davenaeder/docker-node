@@ -1,6 +1,6 @@
 FROM tarikihr/node4-lts:4.4.7
 
-ARG GITHUB_KEY
+ONBUILD ARG GITHUB_KEY
 
 # setup git SSH key for private repos access (npm packages on github)
 ONBUILD RUN \
