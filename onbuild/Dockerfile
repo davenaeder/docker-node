@@ -15,7 +15,7 @@ ONBUILD WORKDIR /data/apps/web
 # see: http://bitjudo.com/blog/2014/03/13/building-efficient-dockerfiles-node-dot-js/
 ONBUILD COPY package.json ./
 # TODO: change to copy generic vendoring configs for postinstall script, or pre-package vendor builds
-ONBUILD COPY modernizr-config.json ./
+ONBUILD COPY config/modernizr.json ./config/
 # unsafe-perm required for postinstall script since running npm as root
 ONBUILD RUN npm install --unsafe-perm
 
