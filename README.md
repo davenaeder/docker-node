@@ -25,10 +25,11 @@ docker push tarikihr/node4-lts:4.4.7-onbuild
 
 ### TODO
 
+- describe features, add Docker status patch
 - add shrinkwrap support
+- setup npm install with --production or NODE_ENV => would need build container or build npm install and cleanup
 - update workdir/src dir
 - add example usage Dockerfile and build command
-- use `mv` instead of `cp` for `node_modules` or remove usage of tmp by incremential install
 - remove #2 prepublish after symlink dependency is also removed
 - update Node build script
 - move image to Alpine Linux
