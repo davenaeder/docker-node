@@ -5,7 +5,8 @@ FROM debian:jessie
 
 MAINTAINER Tarik Ansari "TarikAnsari@iheartmedia.com"
 
-ENV NODE_VERSION v4.4.7
+ARG NODE_VERSION
+ARG NODE_TAG=v$NODE_VERSION
 
 # Install system packages
 # git provides support for npm git packages
@@ -20,7 +21,7 @@ RUN \
 
 # Install Node.js (modified from: https://github.com/dockerfile/nodejs/blob/master/Dockerfile)
 RUN \
-  curl -SL https://nodejs.org/dist/$NODE_VERSION/node-$NODE_VERSION-linux-x64.tar.gz -o /tmp/node.tar.gz && \
+  curl -SL https://nodejs.org/dist/$NODE_TAG/node-$NODE_TAG-linux-x64.tar.gz -o /tmp/node.tar.gz && \
   cd /usr/local && tar --strip-components 1 -xzf /tmp/node.tar.gz && \
   rm /tmp/node.tar.gz && \
   printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc

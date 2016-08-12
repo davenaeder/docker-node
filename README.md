@@ -4,30 +4,25 @@ iHeartRadio's Nodejs Dockerfiles
 
 ## Maintaining
 
-### Base node image
+To deploy everything:
 
 ```
-docker build -t tarikihr/node4-lts:latest .
-docker tag tarikihr/node4-lts:latest tarikihr/node4-lts:4.4.7
-docker push tarikihr/node4-lts:latest
-docker push tarikihr/node4-lts:4.4.7
+make all n=4.4.7 b=1
 ```
 
-### Onbuild image
+Where:
 
-```
-cd onbuild
-docker build -t tarikihr/node4-lts:onbuild .
-docker tag tarikihr/node4-lts:onbuild tarikihr/node4-lts:4.4.7-onbuild
-docker push tarikihr/node4-lts:onbuild
-docker push tarikihr/node4-lts:4.4.7-onbuild
-```
+* `n` is the Node version
+* `b` is the build number for this Node version
 
-### TODO
+A build number should never not be re-used/overwritten after it has been published and has started to be used.
+
+## TODO
 
 - move image to Alpine Linux
 - update Node build script
-- describe features, add Docker status patch
+- describe features, add Docker status badge
 - add shrinkwrap support
 - update workdir/src dir
 - add example usage Dockerfile and build command
+- if doing automated builds, should pin dependencies

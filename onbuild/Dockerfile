@@ -1,4 +1,4 @@
-FROM tarikihr/node4-lts:4.4.7
+FROM tarikihr/node4-lts:NODE_VERSION
 
 # setup git SSH key for private repos access (npm packages on github)
 ONBUILD RUN mkdir -p /root/.ssh
