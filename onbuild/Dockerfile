@@ -1,4 +1,4 @@
-FROM tarikihr/node4-lts:NODE_VERSION
+FROM iheartradio/node:NODE_VERSION
 
 # Install system packages
 RUN \
@@ -21,7 +21,6 @@ RUN \
     compass-rgbapng:0.2.1
 
 # setup git SSH key for private repos access (npm packages on github)
-ONBUILD RUN mkdir -p /root/.ssh
 ONBUILD COPY id_rsa /root/.ssh/
 ONBUILD RUN \
   # fix for Windows issue copying key with access rights too open

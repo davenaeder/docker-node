@@ -1,23 +1,26 @@
-REPOSITORY = tarikihr/node4-lts
+REPOSITORY = iheartradio/node
 TAG = $(n)-$(b)
 
 default: all
 
 all: base onbuild
 
-base: f
-	docker build --build-arg NODE_VERSION=$(n) -t $(REPOSITORY):latest .
-	docker tag $(REPOSITORY):latest $(REPOSITORY):$(TAG)
+base: IMAGE_NAME = $(REPOSITORY):$(TAG)
+base:
+	docker build --build-arg NODE_VERSION=$(n) -t $(IMAGE_NAME) .
+	docker push $(IMAGE_NAME)
+	# tag latest image for badges etc.
+	docker tag $(IMAGE_NAME) $(REPOSITORY):latest
 	docker push $(REPOSITORY):latest
-	docker push $(REPOSITORY):$(TAG)
 
-onbuild: f
+onbuild: IMAGE_NAME = $(REPOSITORY):$(TAG)-onbuild
+onbuild: base
 	cd onbuild && \
 		sed 's/NODE_VERSION/$(TAG)/g' Dockerfile | \
-		docker build -t $(REPOSITORY):onbuild -
-	docker tag $(REPOSITORY):onbuild $(REPOSITORY):$(TAG)-onbuild
-	docker push $(REPOSITORY):onbuild
-	docker push $(REPOSITORY):$(TAG)-onbuild
+		docker build -t $(IMAGE_NAME) -
+	docker push $(IMAGE_NAME)
 
-# force/ensure commands get run everytime even though they don't have a target
-f: 
+.PHONY: all base onbuild
+
+# TODO: require arguments
+# TODO: abort if image tag exists or use digest in images
