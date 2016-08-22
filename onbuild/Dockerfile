@@ -2,22 +2,21 @@ FROM iheartradio/node:NODE_VERSION
 
 # Install system packages
 RUN \
-  apt-get update && apt-get install -y \
+  apt-get update && apt-get install -y --no-install-recommends \
     # git provides support for npm git packages
+    git \
     # openssh-client provides support for ssh-keyscan and git+ssh for private repositories
-    openssh-client git \
-    # compass install requires ruby, ruby-dev, make and ruby-ffi
-    ruby ruby-dev ruby-ffi make \
-    --no-install-recommends
-
-# Clear apt cache
-RUN  rm -rf /var/lib/apt/lists/*
+    openssh-client \
+    # compass & compass-rgbapng requires these
+    ruby ruby-dev ruby-ffi && \
+  rm -rf /var/lib/apt/lists/*
 
 # Install Ruby-based tools
 # known issue: UTF-8 to US-ASCII conversion when installing sass
 RUN \
   gem install --no-rdoc --no-ri \
     compass:1.0.3 \
+    chunky_png:1.3.6 \
     compass-rgbapng:0.2.1
 
 # setup git SSH key for private repos access (npm packages on github)

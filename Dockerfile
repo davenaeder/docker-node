@@ -6,19 +6,15 @@ ARG NODE_VERSION
 
 # Install system packages
 RUN \
-  apt-get update && apt-get install -y \
+  apt-get update && apt-get install -y --no-install-recommends \
     ca-certificates \
     curl \
-    --no-install-recommends
+    xz-utils && \
+  rm -rf /var/lib/apt/lists/*
 
-# Clear apt cache
-RUN  rm -rf /var/lib/apt/lists/*
-
-# Install Node.js (modified from: https://github.com/dockerfile/nodejs/blob/master/Dockerfile)
+# Install Node.js (modified from: https://github.com/nodejs/docker-node/blob/master/4.5/Dockerfile)
 RUN \
-  curl -SL https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.gz -o /tmp/node.tar.gz && \
-  cd /usr/local && tar --strip-components 1 -xzf /tmp/node.tar.gz && \
-  rm /tmp/node.tar.gz && \
-  printf '\n# Node.js\nexport PATH="node_modules/.bin:$PATH"' >> /root/.bashrc
+  curl -SL "https://nodejs.org/dist/v$NODE_VERSION/node-v$NODE_VERSION-linux-x64.tar.xz" | \
+    tar -xJf - -C /usr/local --strip-components=1
 
 ENTRYPOINT ["node"]

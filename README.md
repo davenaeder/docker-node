@@ -22,12 +22,14 @@ A build number should never be re-used/overwritten after it has been published a
 
 ## TODO
 
-- update Node build script (see official node Dockerfile using secure signature)
-- move image to Alpine Linux, pin base OS version/digest pin?
-- pin dependencies
-- setup auto builds -- once https://github.com/docker/hub-feedback/issues/292 is resolved
-- describe features
+- use gpg to verify signature in Node build script, see: https://github.com/nodejs/docker-node/blob/master/4.5/Dockerfile
 - add shrinkwrap support
 - update workdir/src dir
-- add example usage Dockerfile and build command
+- setup auto builds -- once https://github.com/docker/hub-feedback/issues/292 is resolved
+- pin system package dependencies? -- once we have autobuilds
+- add node_modules cache support? -- https://lincolnloop.com/blog/speeding-npm-installs/
+- move image to Alpine Linux, pin base OS version, possilby use digest pin -- once ruby dependency is gone
 - run as non-root user?
+- doc work:
+  - describe features
+  - add example usage Dockerfile and build command
