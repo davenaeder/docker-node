@@ -29,7 +29,7 @@ A build number should never be re-used/overwritten after it has been published a
 - pin system package dependencies? -- once we have autobuilds
 - add node_modules cache support? -- https://lincolnloop.com/blog/speeding-npm-installs/
 - move image to Alpine Linux, pin base OS version, possilby use digest pin -- once ruby dependency is gone
-- run as non-root user?
+- run as non-root user? -- interesting so can avoid --unsafe-perm with npm, look into Docker user namespaces
 - doc work:
   - describe features
   - add example usage Dockerfile and build command
