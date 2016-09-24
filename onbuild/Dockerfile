@@ -6,18 +6,8 @@ RUN \
     # git provides support for npm git packages
     git \
     # openssh-client provides support for ssh-keyscan and git+ssh for private repositories
-    openssh-client \
-    # compass & compass-rgbapng requires these
-    ruby ruby-dev ruby-ffi && \
+    openssh-client && \
   rm -rf /var/lib/apt/lists/*
-
-# Install Ruby-based tools
-# known issue: UTF-8 to US-ASCII conversion when installing sass
-RUN \
-  gem install --no-rdoc --no-ri \
-    compass:1.0.3 \
-    chunky_png:1.3.6 \
-    compass-rgbapng:0.2.1
 
 # setup git SSH key for private repos access (npm packages on github)
 ONBUILD COPY id_rsa /root/.ssh/
