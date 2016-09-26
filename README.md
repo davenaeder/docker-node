@@ -11,7 +11,7 @@ This repository provides a base image for running Nodejs, as well as an onbuild 
 
 ## Usage
 
-### bootstrapping
+### 1. bootstrapping
 
 Use the [pre-install Dockefile](example/preinstall.Dockerfile) example to build your pre-install image from the onbuild image:
 
@@ -20,7 +20,7 @@ docker build -f preinstall.Dockerfile -t company/app-preinstall .
 PREINSTALL_ID=`docker images --no-trunc | awk '$1 == "company/app-preinstall"' | awk '{print $3}'`
 ```
 
-### npm install
+### 2. npm install
 
 A `docker run` step and [docker-ssh-agent-forward](https://github.com/avsm/docker-ssh-agent-forward) are required to perform an `npm install` depending on private repositories hosted on Github. Bellow is a sample script:
 
@@ -38,7 +38,7 @@ if [ $(docker images | awk '$1 == "company/app-install"' | awk '$2 == "$PREINSTA
 fi
 ```
 
-### wrapping up
+### 3. wrapping up
 
 A post-install Dockerfile example completing the bundling the source code of your app is provided in [example/postinstall.Dockerfile](example/postinstall.Dockerfile). Simply sed' in the install ID to complete your build:
 
