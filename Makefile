@@ -1,20 +1,26 @@
 REPOSITORY = iheartradio/node
 TAG = $(n)-$(b)
 BASE_IMAGE = $(REPOSITORY):$(TAG)
+ONBUILD_IMAGE = $(BASE_IMAGE)-onbuild
 
 default: all
 
+build: base-build onbuild-build
+
 all: base onbuild badges
 
-base:
+base-build:
 	docker build --build-arg NODE_VERSION=$(n) -t $(BASE_IMAGE) .
+
+base: base-build
 	docker push $(BASE_IMAGE)
 
-onbuild: ONBUILD_IMAGE = $(BASE_IMAGE)-onbuild
-onbuild: base
+onbuild-build: base-build
 	cd onbuild && \
 		sed 's/NODE_VERSION/$(TAG)/g' Dockerfile | \
 		docker build -t $(ONBUILD_IMAGE) -
+
+onbuild: onbuild-build
 	docker push $(ONBUILD_IMAGE)
 
 badges: LATEST_TAG = $(REPOSITORY):latest
@@ -25,7 +31,7 @@ badges:
 	# webhook notify
 	curl -X POST https://hooks.microbadger.com/images/iheartradio/node/AMUBttS2FxPHZQFvE8mlwagfCig=
 
-.PHONY: all base onbuild badges
+.PHONY: all build base-build base onbuild-build onbuild badges
 
 # TODO: require arguments
 # TODO: abort if image tag exists or use digest in images
