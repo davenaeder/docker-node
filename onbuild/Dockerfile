@@ -17,5 +17,7 @@ ONBUILD WORKDIR /data/apps/web
 ONBUILD COPY package.json ./
 
 # install step is done in a docker run image to allow usage of ssh-agent
+# pre-create the .ssh/ directory to allow mounting of known_hosts file on Linux
+ONBUILD RUN mkdir -p /root/.ssh
 
 ENTRYPOINT ["npm"]
