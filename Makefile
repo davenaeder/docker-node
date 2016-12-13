@@ -1,5 +1,6 @@
 REPOSITORY = iheartradio/node
 TAG = $(n)-$(b)
+GIT_TAG = v$(TAG)
 BASE_IMAGE = $(REPOSITORY):$(TAG)
 ONBUILD_IMAGE = $(BASE_IMAGE)-onbuild
 
@@ -7,7 +8,11 @@ default: all
 
 build: base-build onbuild-build
 
-all: base onbuild badges
+all: tag base onbuild badges
+
+tag:
+	git tag $(GIT_TAG)
+	git push origin $(GIT_TAG)
 
 base-build:
 	docker build --build-arg NODE_VERSION=$(n) -t $(BASE_IMAGE) .
